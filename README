@@ -1,8 +1,8 @@
-# Health Influencer Claim Verification
+#Health Influencer Claim Verification
 
 This project provides a **Node.js** (Express) service that automatically fetches (or stores) health-related posts/tweets from an influencer, detects any health claims they make, de-duplicates repeated claims, and uses **OpenAI** to categorize and verify the validity of these claims. It stores the results in a **PostgreSQL** database and exposes a REST API for a front-end or other clients to consume.
  
-## Features
+##Features
 
 1. **Influencer Management**  
    - Create or update influencers (name, handle, follower counts) in a PostgreSQL database.  
@@ -28,7 +28,7 @@ This project provides a **Node.js** (Express) service that automatically fetches
    - **`POST /influencers`** – Creates or updates an influencer.  
    - **`POST /analyze/:id`** – Runs the OpenAI-based analysis pipeline for a given influencer.
 
-## How It Works
+##How It Works
 
 1. **Create an Influencer**  
    - POST their name, handle (unique), and follower count to `/influencers`.  
@@ -45,14 +45,14 @@ This project provides a **Node.js** (Express) service that automatically fetches
 3. **View Results**  
    - **GET `/influencers`** to see all influencers, or **`/influencers/:id`** to see that influencer’s claims in detail.
 
-## Tech Stack
+##Tech Stack
 
 - **Node.js** / **Express** for the backend API  
 - **PostgreSQL** for data storage  
 - **OpenAI** for LLM-based claim extraction, categorization, and verification  
 - **Docker Compose** (optional) to run PostgreSQL and the Node service together
 
-## Installation & Setup
+##Installation & Setup
 
 1. **Clone** the repository.  
 2. **Set up** your environment variables in a `.env` file or export them in your shell:
