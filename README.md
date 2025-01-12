@@ -72,7 +72,8 @@ Code kopieren
 │   ├── server.js        // Main Express app
 │   ├── db.js            // Database connection & table init
 │   └── ...
-└── docker-compose.yml```
+└── docker-compose.yml
+```
 
 Installation & Setup
 --------------------
