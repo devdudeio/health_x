@@ -1,0 +1,39 @@
+# --------------------------
+#  Global / System Ignored
+# --------------------------
+.DS_Store
+Thumbs.db
+*.log
+
+# --------------------------
+#  Environment Files
+# --------------------------
+.env
+*.env
+
+# --------------------------
+#  Node Modules (Backend & Frontend)
+# --------------------------
+/backend/node_modules/
+/frontend/node_modules/
+
+# --------------------------
+#  Backend-Specific
+# --------------------------
+/backend/logs/
+/backend/coverage/
+/backend/npm-debug.log
+/backend/yarn-error.log
+
+# (Uncomment if needed for Python in backend—just in case)
+# /backend/__pycache__/
+# /backend/*.pyc
+
+# --------------------------
+#  Frontend-Specific
+# --------------------------
+/frontend/build/
+/frontend/dist/
+/frontend/coverage/
+/frontend/npm-debug.log
+/frontend/yarn-error.log
