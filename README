@@ -1,4 +1,4 @@
-Health Influencer Claim Verification
+# Health Influencer Claim Verification
 ====================================
 
 This project provides a **Node.js (Express)** service that automatically fetches (or stores) health-related posts/tweets from an influencer, detects any health claims they make, **de-duplicates** repeated claims, and uses **OpenAI** to categorize and verify the validity of these claims. It stores the results in a **PostgreSQL** database and exposes a **REST API** for a front-end or other clients to consume.
