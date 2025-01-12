@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    container_name: health_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: health_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: health_backend
+    # If your Node app is listening on port 5000 inside the container,
+    # but you want to map it to 5001 on your host, do this:
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=health_db
+      - DB_PORT=5432
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # If your Node app is set to listen on port 5001 inside the container,
+      # uncomment the following line and change your code accordingly:
+      # - PORT=5001
+
+  frontend:
+    build: ./frontend
+    container_name: health_frontend
+    # Typically React dev server listens on 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
