@@ -1,0 +1,65 @@
+# Health Influencer Claim Verification
+
+This project provides a **Node.js** (Express) service that automatically fetches (or stores) health-related posts/tweets from an influencer, detects any health claims they make, de-duplicates repeated claims, and uses **OpenAI** to categorize and verify the validity of these claims. It stores the results in a **PostgreSQL** database and exposes a REST API for a front-end or other clients to consume.
+ 
+## Features
+
+1. **Influencer Management**  
+   - Create or update influencers (name, handle, follower counts) in a PostgreSQL database.  
+   - Fetch a list of all influencers or retrieve detailed info (including claims) for a specific influencer.
+
+2. **Claim Extraction & Verification**  
+   - Pull (mock) tweets or text from the influencer.  
+   - Use **OpenAI GPT** to automatically **extract** health-related claims.  
+   - **De-duplicate** repeated claims (naive approach by default, though you could integrate more advanced methods).  
+   - Categorize each claim (e.g., Nutrition, Medicine, Mental Health, Fitness, Other).  
+   - Verify the claim (Verified, Questionable, Debunked) and assign a confidence score.
+
+3. **Trust Scoring**  
+   - Compute an overall trust score for each influencer, based on the average confidence of their claims.
+
+4. **Database Storage**  
+   - Stores **influencers** and **claims** in a PostgreSQL database with relationships.  
+   - Each claim includes text, category, verification status, confidence score, and timestamp.
+
+5. **RESTful Endpoints**  
+   - **`GET /influencers`** – Lists all influencers.  
+   - **`GET /influencers/:id`** – Retrieves a single influencer’s details and claims.  
+   - **`POST /influencers`** – Creates or updates an influencer.  
+   - **`POST /analyze/:id`** – Runs the OpenAI-based analysis pipeline for a given influencer.
+
+## How It Works
+
+1. **Create an Influencer**  
+   - POST their name, handle (unique), and follower count to `/influencers`.  
+
+2. **Analyze**  
+   - When you call `POST /analyze/:id`, the service:
+     1. **Fetches** (or simulates) tweets for that influencer.  
+     2. Uses **OpenAI** to **extract** health-related claims from the text.  
+     3. **De-duplicates** repeated claims.  
+     4. **Categorizes** each claim into broad categories (Nutrition, Medicine, etc.).  
+     5. **Verifies** each claim with a “Verified,” “Questionable,” or “Debunked” label and a **confidence score** (0-100).  
+     6. **Stores** everything in the `claims` table, updates the influencer’s overall `trust_score`.
+
+3. **View Results**  
+   - **GET `/influencers`** to see all influencers, or **`/influencers/:id`** to see that influencer’s claims in detail.
+
+## Tech Stack
+
+- **Node.js** / **Express** for the backend API  
+- **PostgreSQL** for data storage  
+- **OpenAI** for LLM-based claim extraction, categorization, and verification  
+- **Docker Compose** (optional) to run PostgreSQL and the Node service together
+
+## Installation & Setup
+
+1. **Clone** the repository.  
+2. **Set up** your environment variables in a `.env` file or export them in your shell:
+   ```bash
+   DB_HOST=localhost
+   DB_USER=postgres
+   DB_PASS=postgres
+   DB_NAME=health_db
+   OPENAI_API_KEY=sk-xxx
+   PORT=5001
